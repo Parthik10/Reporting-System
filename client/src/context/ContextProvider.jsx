@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
 const initialState = {
   details: {
+    img : '',
     disaster: '',
     description: '',
     location: '',

@@ -29,6 +29,7 @@ app.use("/api/data" , serviceRoute);
 
 //error middleware
 app.use(errorMiddleware);
+app.use("/uploads", express.static("uploads"));
 
 const PORT = 5000;
 
@@ -38,3 +39,4 @@ connectDb().then(()=>{
         console.log(`server is running at port : ${PORT}`);
     });
 });
+ 

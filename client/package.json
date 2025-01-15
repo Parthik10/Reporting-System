@@ -17,6 +17,7 @@
     "@mui/icons-material": "^6.0.1",
     "@mui/material": "^6.0.1",
     "autosuggest-highlight": "^3.3.4",
+    "browser-image-compression": "^2.0.2",
     "jwt-decode": "^4.0.0",
     "mapbox-gl": "^3.6.0",
     "node-geocoder": "^4.4.0",

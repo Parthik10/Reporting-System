@@ -5,6 +5,7 @@ const serviceSchema = new Schema({
   location: { type: String, required: true },
   time: { type: String, required: true },
   message: { type: String, required: true },
+  img:{type : String , required: true}
 });
 
 const Service = new model("Reports", serviceSchema);

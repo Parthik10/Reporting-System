@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Box, Card, CardMedia, CardContent, Typography, Divider } from "@mui/material";
-import proImage from "./abc.jpg"; // Assuming a placeholder image
+import proImage from "./icons/profile.jpg";
+
 
 export default function RecipeReviewCard() {
   
@@ -52,7 +53,7 @@ export default function RecipeReviewCard() {
           <CardMedia
             component="img"
             height="195"
-            image={proImage}
+            image={`http://localhost:5000/uploads/${service.img}`}
             alt="Profile Image"
           />
 
