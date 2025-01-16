@@ -1,7 +1,6 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Box, Card, CardMedia, CardContent, Typography, Divider } from "@mui/material";
-import proImage from "./icons/profile.jpg";
 
 
 export default function RecipeReviewCard() {

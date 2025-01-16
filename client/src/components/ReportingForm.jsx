@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Stack, DialogActions, Button, IconButton } from "@mui/material";
+import { Stack, DialogActions, Button, IconButton , Autocomplete } from "@mui/material";
 import InfoField from "./InfoField";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -21,22 +21,20 @@ const ReportingForm = () => {
     const file = e.target.files[0];
     if (file) {
       try {
-        console.log("Original File Size:", file.size / 1024, "KB");
   
         let compressedFile = file;
-        const maxSizeInKB = 100; // Maximum size in KB (100 KB)
+        const maxSizeInKB = 100; 
         const options = {
-          maxSizeMB: 0.1, // Initial max size in MB (100 KB)
-          maxWidthOrHeight: 1000, // Adjust width/height if needed
-          useWebWorker: true, // Use web worker for better performance
+          maxSizeMB: 0.1, 
+          maxWidthOrHeight: 1000, 
+          useWebWorker: true, 
         };
   
-        // Compress the image iteratively until it's less than 100 KB
+      
         do {
           compressedFile = await imageCompression(compressedFile, options);
           console.log("Compressed File Size:", compressedFile.size / 1024, "KB");
-  
-          // Adjust the options dynamically for further compression if needed
+
           options.maxSizeMB *= 0.8; // Reduce max size by 20% on each iteration
           options.maxWidthOrHeight *= 0.9; // Reduce dimensions slightly
         } while (compressedFile.size / 1024 > maxSizeInKB);

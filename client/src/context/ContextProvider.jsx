@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
+const API = import.meta.env.VITE_APP_URI_API;
 
 const initialState = {
   details: {
@@ -32,7 +33,10 @@ const reducer = (state, action) => {
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
-};  const getServices = async () => {
+};  
+
+//fetch geocoder services
+const getServices = async (dispatch) => {
   try {
     const response = await fetch(`${API}/api/data/service`, {
       method: "GET",
@@ -40,13 +44,38 @@ const reducer = (state, action) => {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data.msg);
-      setServices(data.msg);
+      const servicesWithCoordinates = await geocodeServices(data.msg);
+      dispatch({ type: 'SET_SERVICES', payload: servicesWithCoordinates });
     }
   } catch (error) {
-    console.log(`services frontend error: ${error}`);
+    console.error(`Services fetch error: ${error}`);
   }
 };
+
+// Geocode Function
+const geocodeServices = async (services) => {
+  const geocodedServices = [];
+  for (const service of services) {
+    try {
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+          service.location
+        )}.json?access_token=${import.meta.env.VITE_MAPBOX_TOKEN}`
+      );
+      const data = await response.json();
+      if (data.features && data.features.length > 0) {
+        const [lng, lat] = data.features[0].center;
+        geocodedServices.push({ ...service, coordinates: { lng, lat } });
+      } else {
+        console.error(`Geocoding failed for location: ${service.location}`);
+      }
+    } catch (error) {
+      console.error(`Error geocoding location "${service.location}": ${error}`);
+    }
+  }
+  return geocodedServices;
+};
+
 
 // Create context
 const Context = createContext();
@@ -59,6 +88,10 @@ export const useValue = () => {
 // Context Provider Component
 const ContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    getServices(dispatch);
+  }, []);
 
   return (
     <Context.Provider value={{ state, dispatch }}>
