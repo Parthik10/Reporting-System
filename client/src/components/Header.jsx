@@ -11,14 +11,15 @@ import Button from '@mui/material/Button';
 import FilterHdrIcon from '@mui/icons-material/FilterHdr';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import photoURL from '../profile.jpg';
+import photoURL from "../assets/profile.jpg"
 
 const user = {name:' test' , photoURL};
 
 const pages = [
   { name: 'Home', path: '/' },
   { name: 'Disaster reporting portal', path: '/add-report' },
-  { name: 'Reports', path: '/reports' }
+  { name: 'Reports', path: '/reports' },
+  {name : 'Weather' , path: '/weather'}
 ];
 
 function Header() {
