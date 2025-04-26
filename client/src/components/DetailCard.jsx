@@ -6,7 +6,10 @@ import { Box, Card, CardMedia, CardContent, Typography, Divider } from "@mui/mat
 export default function RecipeReviewCard() {
   
   const [services, setServices] = useState([]); // State to hold the services data
-  const API = import.meta.env.VITE_APP_URI_API;
+  const isLocal = window.location.hostname === 'localhost';
+  const API= isLocal
+    ? import.meta.env.VITE_APP_URI_API 
+    : import.meta.env.VITE_BACKEND_URL;
 
   const getServices = async () => {
     try {

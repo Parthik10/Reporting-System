@@ -6,6 +6,11 @@ import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
 
 function Chatbot() {
+  const isLocal = window.location.hostname === 'localhost';
+  const API= isLocal
+    ? import.meta.env.VITE_APP_URI_API 
+    : import.meta.env.VITE_BACKEND_URL;
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [open, setOpen] = useState(false); // to open/close chat
@@ -20,7 +25,7 @@ function Chatbot() {
     setInput('');
 
     try {
-      const response = await axios.post('http://localhost:5000/api/chat', {
+      const response = await axios.post(`${API}/api/chat`, {
         messages: updatedMessages,
       });
 

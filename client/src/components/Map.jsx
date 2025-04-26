@@ -3,7 +3,10 @@ import ReactMapGl, { Marker } from "react-map-gl";
 import AddLocation from "./AddLocation"; // Make sure AddLocation works correctly
 
 const TOKEN = import.meta.env.VITE_MAPBOX_TOKEN;
-const API = import.meta.env.VITE_APP_URI_API;
+const isLocal = window.location.hostname === 'localhost';
+const API= isLocal
+  ? import.meta.env.VITE_APP_URI_API 
+  : import.meta.env.VITE_BACKEND_URL;
 
 export default function Map() {
   const [viewPort, setViewPort] = useState({

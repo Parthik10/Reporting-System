@@ -3,7 +3,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { TextField, Button, Box, Typography } from "@mui/material";
 import { toast } from "react-toastify";
 
-const API = import.meta.env.VITE_APP_URI_API;
+const isLocal = window.location.hostname === 'localhost';
+const API= isLocal
+  ? import.meta.env.VITE_APP_URI_API 
+  : import.meta.env.VITE_BACKEND_URL;
 
 const Register = () => {
   const navigate = useNavigate();

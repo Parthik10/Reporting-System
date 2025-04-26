@@ -5,7 +5,10 @@ export default function EmergencyButton({ api }) {
   const { state } = useValue();  // Access the global state from context
   const [user, setUser] = useState(null);
 
-  const API = import.meta.env.VITE_APP_URI_API;
+  const isLocal = window.location.hostname === 'localhost';
+const API= isLocal
+  ? import.meta.env.VITE_APP_URI_API 
+  : import.meta.env.VITE_BACKEND_URL;
 
   // Check if user is logged in
   useEffect(() => {

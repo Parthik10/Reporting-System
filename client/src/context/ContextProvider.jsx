@@ -1,5 +1,9 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-const API = import.meta.env.VITE_APP_URI_API;
+
+const isLocal = window.location.hostname === 'localhost';
+const API= isLocal
+  ? import.meta.env.VITE_APP_URI_API 
+  : import.meta.env.VITE_BACKEND_URL;
 
 const initialState = {
   details: {
