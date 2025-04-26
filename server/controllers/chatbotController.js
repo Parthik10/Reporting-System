@@ -8,7 +8,7 @@ exports.chatWithBot = async (req, res) => {
     role: 'user',
     parts: [
       { text: `You are a helpful assistant for a project called "Reporting Portal" where users report disasters and issues in Uttarakhand.
-  Features include:
+    Features include:
   - Reporting of issues like fallen trees, holes in roads, floods, earthquakes, etc.
   - Map view for all reported locations.
   - Emergency alerts for serious incidents.

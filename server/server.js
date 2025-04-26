@@ -11,6 +11,11 @@ const connectDb = require("./utils/db");
 const errorMiddleware = require("./middlewares/error.middleware");
 const chatbotRoutes = require('./router/chatbotRoutes');
 
+app.get('/', (req, res) => {
+  res.send('Backend is running 🚀');
+});
+
+
 // Handle CORS
 const corsOptions = {
   origin: "http://localhost:5173",

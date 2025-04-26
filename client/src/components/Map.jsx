@@ -7,39 +7,13 @@ const API = import.meta.env.VITE_APP_URI_API;
 
 export default function Map() {
   const [viewPort, setViewPort] = useState({
-    latitude: 30.2731798221902, // Start map closer to your emergency location
-    longitude: 77.9996613565802,
-    zoom: 8, // Zoom level to fit markers better
+    latitude: 30.3165, // Start map closer to your emergency location
+    longitude:78.0322,
+    zoom: 4, // Zoom level to fit markers better
   });
-  
 
-  const [locations, setLocations] = useState([]); // Manual locations
-  const [emergencyLocations, setEmergencyLocations] = useState([]); // Fetched from backend
-  const [blink, setBlink] = useState(true); // For blinking effect
 
-  // Fetch emergencies
-  useEffect(() => {
-    const fetchEmergencies = async () => {
-      try {
-        const response = await fetch(`${API}/api/emergency`);
-        if (!response.ok) throw new Error("Network response was not ok");
-        const data = await response.json();
-        setEmergencyLocations(data);
-      } catch (error) {
-        console.error("Error fetching emergencies:", error);
-      }
-    };
 
-    fetchEmergencies();
-  }, []);
-
-  // Blinking logic
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setBlink((prev) => !prev);
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
 
   // Handle clicking on the map
   const handleMapClick = (event) => {
@@ -63,42 +37,6 @@ export default function Map() {
         onMove={(evt) => setViewPort(evt.viewState)}
         onClick={handleMapClick}
       >
-        {/* Manual markers */}
-        {locations.map((location, index) => (
-          <Marker
-            key={`manual-${index}`}
-            longitude={location.longitude}
-            latitude={location.latitude}
-            anchor="bottom"
-          >
-            <div style={{ fontSize: "24px", color: "red" }}>📍</div>
-          </Marker>
-        ))}
-
-        {/* Emergency markers from backend */}
-        {emergencyLocations.map((emergency, index) => {
-          return (
-            <Marker
-              key={`emergency-${index}`}
-              longitude={emergency.longitude}
-              latitude={emergency.latitude}
-              anchor="bottom"
-            >
-              <div
-                style={{
-                  fontSize: "24px",
-                  color: "green", 
-                  zIndex: 1000,
-                  // transition: "color 0.3s ease",
-                }}
-                title={`Emergency reported by ${emergency.name}`}
-              >
-                📍
-               </div>
-            </Marker>
-          );
-        })}
-
         <AddLocation />
       </ReactMapGl>
     </div>
