@@ -5,6 +5,7 @@ const cors = require('cors');
 const contactRoute = require('./router/contact-router');
 const serviceRoute = require("./router/service-router");
 const reportRoute = require("./router/report-router");
+const authRoute = require("./router/auth-router");
 const connectDb = require("./utils/db" );
 const errorMiddleware = require("./middlewares/error.middleware");
 
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/api/form" , contactRoute);
 app.use("/api/reportform" , reportRoute);
 app.use("/api/data" , serviceRoute);
+app.use("/api/auth", authRoute);
 
 
 //error middleware

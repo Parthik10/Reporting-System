@@ -15,6 +15,10 @@ const initialState = {
   alert: null,
   profile: null,
   services: [],
+  auth: {
+    user: null,
+    token: null,
+  },
 };
 
 // Reducer Function
@@ -30,6 +34,10 @@ const reducer = (state, action) => {
       return { ...state, location: action.payload };
     case 'SET_SERVICES':
       return { ...state, services: action.payload };
+    case 'LOGIN':
+      return { ...state, auth: { user: action.payload.user, token: action.payload.token } };
+    case 'LOGOUT':
+      return { ...state, auth: { user: null, token: null } };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
@@ -91,7 +99,22 @@ const ContextProvider = ({ children }) => {
 
   useEffect(() => {
     getServices(dispatch);
+    // Load auth from localStorage
+    const storedAuth = localStorage.getItem("auth");
+    if (storedAuth) {
+      const auth = JSON.parse(storedAuth);
+      dispatch({ type: "LOGIN", payload: auth });
+    }
   }, []);
+
+  useEffect(() => {
+    // Persist auth to localStorage
+    if (state.auth.token) {
+      localStorage.setItem("auth", JSON.stringify(state.auth));
+    } else {
+      localStorage.removeItem("auth");
+    }
+  }, [state.auth]);
 
   return (
     <Context.Provider value={{ state, dispatch }}>

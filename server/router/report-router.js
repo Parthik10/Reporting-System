@@ -1,41 +1,25 @@
 const express = require("express");
-const Report = require("../models/report-model");
-const upload = require("../middlewares/uploads_middleware"); // Import the multer middleware
-const ReportForm = require("../controllers/report-controller"); // Import your controller if you want to keep things modular
+const upload = require("../middlewares/uploads_middleware");
+const { authMiddleware, adminMiddleware } = require("../middlewares/auth.middleware");
+const {
+  createReport,
+  getAllReports,
+  deleteReport,
+  updateReport,
+} = require("../controllers/report-controller");
 
 const router = express.Router();
 
-// POST route to handle the report submission with image upload
-router.post("/report", upload.single("image"), async (req, res) => {
-  try {
-   
-    // Destructure the form data from the request body
-    const { disaster, description, location, reportTime } = req.body;
+// User: Create a report
+router.post("/report", authMiddleware, upload.single("image"), createReport);
 
-    // Handle image file upload (save image filename if uploaded)
-    const img = req.file ? req.file.filename : null;
+// Admin: Get all reports
+router.get("/admin/reports", authMiddleware, adminMiddleware, getAllReports);
 
-    // Create a new report entry in the database
-    const newReport = new Report({
-      disaster,
-      description,
-      location,
-      reportTime,
-      img,// Store image filename in the report document
-    });
+// Admin: Delete a report
+router.delete("/admin/report/:id", authMiddleware, adminMiddleware, deleteReport);
 
-    // Save the new report to the database
-    await newReport.save();
-
-    // Send success response
-    res.status(200).json({ message: "Report submitted successfully" });
-  } catch (error) {
-    console.error("Error submitting report:", error);
-    res.status(500).json({ message: "Error submitting report" });
-  }
-});
-
-// Alternative: If you're using a controller to handle the logic, you can also define it like this
-// router.post("/report", ReportForm);
+// Admin: Update a report
+router.put("/admin/report/:id", authMiddleware, adminMiddleware, updateReport);
 
 module.exports = router;

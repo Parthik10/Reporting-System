@@ -1,5 +1,7 @@
+// Updated Header.jsx with MUI Menu fix
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,18 +13,18 @@ import Button from '@mui/material/Button';
 import FilterHdrIcon from '@mui/icons-material/FilterHdr';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import photoURL from "../assets/profile.jpg"
-
-const user = {name:' test' , photoURL};
+import { useValue } from '../context/ContextProvider';
 
 const pages = [
   { name: 'Home', path: '/' },
-  { name: 'Disaster reporting portal', path: '/add-report' },
-  { name: 'Reports', path: '/reports' },
-  {name : 'Weather' , path: '/weather'}
+  { name: 'report here', path: '/add-report' },
+  { name: 'Reports', path: '/reports' }
 ];
 
 function Header() {
+  const { state, dispatch } = useValue();
+  const { auth } = state;
+  const navigate = useNavigate();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -33,6 +35,11 @@ function Header() {
     setAnchorElNav(null);
   };
 
+  const handleLogout = () => {
+    dispatch({ type: 'LOGOUT' });
+    navigate('/login');
+  };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: '#31572c' }}>
       <Container maxWidth="xl">
@@ -41,8 +48,8 @@ function Header() {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="/"
+            component={Link}
+            to="/"
             sx={{
               mr: 0,
               display: { xs: 'none', md: 'flex' },
@@ -53,7 +60,7 @@ function Header() {
               textDecoration: 'none',
             }}
           >
-            {/* Logo or Title */}
+          
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -70,30 +77,65 @@ function Header() {
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
+              anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
               keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
+              transformOrigin={{ vertical: 'top', horizontal: 'left' }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: 'block', md: 'none' } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
-                  <Typography
-                    component={Link}
-                    to={page.path}
-                    sx={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
-                  >
-                    {page.name}
-                  </Typography>
-                </MenuItem>
-              ))}
+              {[
+                ...pages.map((page) => (
+                  <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    <Typography
+                      component={Link}
+                      to={page.path}
+                      sx={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
+                    >
+                      {page.name}
+                    </Typography>
+                  </MenuItem>
+                )),
+                ...(!auth.user
+                  ? [
+                      <MenuItem key="login" onClick={handleCloseNavMenu}>
+                        <Typography
+                          component={Link}
+                          to="/login"
+                          sx={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
+                        >
+                          Login
+                        </Typography>
+                      </MenuItem>,
+                      <MenuItem key="register" onClick={handleCloseNavMenu}>
+                        <Typography
+                          component={Link}
+                          to="/register"
+                          sx={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
+                        >
+                          Register
+                        </Typography>
+                      </MenuItem>,
+                    ]
+                  : [
+                      auth.user.role === 'admin' && (
+                        <MenuItem key="admin-reports" onClick={handleCloseNavMenu}>
+                          <Typography
+                            component={Link}
+                            to="/admin-reports"
+                            sx={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
+                          >
+                            Admin Reports
+                          </Typography>
+                        </MenuItem>
+                      ),
+                      <MenuItem key="logout" onClick={() => { handleCloseNavMenu(); handleLogout(); }}>
+                        <Typography sx={{ textAlign: 'center', color: 'inherit' }}>
+                          Logout
+                        </Typography>
+                      </MenuItem>,
+                    ])
+              ]}
             </Menu>
           </Box>
 
@@ -108,6 +150,27 @@ function Header() {
                 {page.name}
               </Button>
             ))}
+            {!auth.user ? (
+              <>
+                <Button component={Link} to="/login" sx={{ my: 2, color: 'white' }}>
+                  Login
+                </Button>
+                <Button component={Link} to="/register" sx={{ my: 2, color: 'white' }}>
+                  Register
+                </Button>
+              </>
+            ) : (
+              <>
+                {auth.user.role === 'admin' && (
+                  <Button component={Link} to="/admin-reports" sx={{ my: 2, color: 'white' }}>
+                    Admin Reports
+                  </Button>
+                )}
+                <Button onClick={handleLogout} sx={{ my: 2, color: 'white' }}>
+                  Logout
+                </Button>
+              </>
+            )}
           </Box>
         </Toolbar>
       </Container>

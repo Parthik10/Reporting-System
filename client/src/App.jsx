@@ -1,26 +1,59 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
-import Home from "./pages/Home";
+import Home from './pages/Home';
 import Reports from './pages/Reports';
 import AddReport from './pages/AddReport';
-import Weater from './pages/Weater';
 import Header from './components/Header';
-import ContextProvider from './context/ContextProvider';
+import ContextProvider, { useValue } from './context/ContextProvider';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import AdminReports from './pages/AdminReports';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+function PrivateRoute({ children }) {
+  const { state } = useValue();
+  const { auth } = state;
+  return auth.token ? children : <Navigate to="/login" />;
+}
+
+function AdminRoute({ children }) {
+  const { state } = useValue();
+  const { auth } = state;
+  return auth.token && auth.user.role === 'admin' ? children : <Navigate to="/" />;
+}
 
 function App() {
   return (
     <ContextProvider>
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/add-report" element={<AddReport />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/weather" element={<Weater />} />
-      </Routes>
-    </Router>
+      <Router>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/add-report"
+            element={
+              <PrivateRoute>
+                <AddReport />
+              </PrivateRoute>
+            }
+          />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/admin-reports"
+            element={
+              <AdminRoute>
+                <AdminReports />
+              </AdminRoute>
+            }
+          />
+        </Routes>
+        <ToastContainer position="top-right" autoClose={3000} />
+      </Router>
     </ContextProvider>
   );
 }

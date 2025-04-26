@@ -14,6 +14,6 @@ const connectDb = async()=>{
         console.error("databse connection failed");
         process.exit(0);
     }  
-};
+}; 
 
 module.exports = connectDb;   
