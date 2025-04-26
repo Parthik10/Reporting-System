@@ -8,6 +8,7 @@ function Home() {
     <ContextProvider>
         <Map/>   
         <EmergencyButton/>
+      
     </ContextProvider>
   )
 }

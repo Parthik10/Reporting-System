@@ -9,6 +9,7 @@ import ContextProvider, { useValue } from './context/ContextProvider';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminReports from './pages/AdminReports';
+import Chatbot from './components/chatbot';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -54,6 +55,7 @@ function App() {
         </Routes>
         <ToastContainer position="top-right" autoClose={3000} />
       </Router>
+      <Chatbot />
     </ContextProvider>
   );
 }

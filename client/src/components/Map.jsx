@@ -88,6 +88,7 @@ export default function Map() {
                 style={{
                   fontSize: "24px",
                   color: "green", 
+                  zIndex: 1000,
                   // transition: "color 0.3s ease",
                 }}
                 title={`Emergency reported by ${emergency.name}`}

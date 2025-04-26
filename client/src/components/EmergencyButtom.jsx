@@ -89,7 +89,7 @@ export default function EmergencyButton({ api }) {
 
   // Render a loading message if the user data is not yet available
   if (!user) {
-    return <p>Loading user info...</p>;
+    return <p>Loading user info for emergency...</p>;
   }
 
   return (
