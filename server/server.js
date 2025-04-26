@@ -19,11 +19,11 @@ app.get('/', (req, res) => {
 // Handle CORS
 const corsOptions = {
   origin: [
-    process.env.FRONTEND_URL, // Ensure this is set correctly in your .env file for the production URL (e.g., Vercel)
-    "https://clubmanagement1.netlify.app",  // Production URL (Netlify)
-    "http://localhost:5173", // Local development
-    "http://localhost:4173"  // Vite preview URL, if applicable
-  ].filter(Boolean), // Removes undefined values, ensuring only valid origins
+    process.env.FRONTEND_URL, 
+    "https://clubmanagement1.netlify.app",
+    "http://localhost:5173", 
+    "http://localhost:4173"  
+  ].filter(Boolean), 
   methods: "GET, POST, PUT, DELETE, PATCH",
   credentials: true,  // Allow cookies to be sent with requests
 };
