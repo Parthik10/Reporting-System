@@ -1,4 +1,3 @@
-// src/components/Chatbot.jsx
 import { useState } from 'react';
 import { Box, IconButton, TextField, Button, Paper, Typography } from '@mui/material';
 import { green } from '@mui/material/colors';
@@ -11,23 +10,21 @@ function Chatbot() {
   const [input, setInput] = useState('');
   const [open, setOpen] = useState(false); // to open/close chat
 
+  // Handle sending message
   const sendMessage = async () => {
-    if (!input) return;
-    const userMessage = { role: 'user', content: input };
-    setMessages([...messages, userMessage]);
+    if (!input.trim()) return; // Ignore empty or spaces
+
+    const newUserMessage = { role: 'user', content: input };
+    const updatedMessages = [...messages, newUserMessage];
+    setMessages(updatedMessages);
     setInput('');
+
     try {
-      const response = await axios.post('https://api.openai.com/v1/chat/completions', {
-        model: 'gpt-3.5-turbo',
-        messages: [...messages, userMessage],
-      }, {
-        headers: {
-          Authorization: `Bearer YOUR_OPENAI_API_KEY`,
-          'Content-Type': 'application/json',
-        },
+      const response = await axios.post('http://localhost:5000/api/chat', {
+        messages: updatedMessages,
       });
 
-      const botMessage = response.data.choices[0].message;
+      const botMessage = response.data;
       setMessages(prev => [...prev, botMessage]);
       
     } catch (error) {
@@ -74,10 +71,26 @@ function Chatbot() {
           <Typography variant="h6" sx={{ mb: 2 }}>helpbot</Typography>
           <Box sx={{ flex: 1, overflowY: 'auto', mb: 2}}>
             {messages.map((msg, idx) => (
-              <Box key={idx} sx={{ mb: 1 }}>
-                <Typography variant="body2" color={msg.role === 'user' ? 'primary' : 'secondary'}>
-                  <b>{msg.role}:</b> {msg.content}
-                </Typography>
+              <Box
+                key={idx}
+                sx={{
+                  display: 'flex',
+                  justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
+                  mb: 1,
+                }}
+              >
+                <Box
+                  sx={{
+                    p: 1,
+                    bgcolor: msg.role === 'user' ? '#DCF8C6' : '#F1F0F0',
+                    borderRadius: 2,
+                    maxWidth: '80%',
+                  }}
+                >
+                  <Typography variant="body2" color="text.primary">
+                    {msg.content}
+                  </Typography>
+                </Box>
               </Box>
             ))}
           </Box>
@@ -87,9 +100,19 @@ function Chatbot() {
             value={input}
             onChange={e => setInput(e.target.value)}
             placeholder="Type your message..."
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+              }
+            }}
             sx={{ mb: 1 }}
           />
-          <Button variant="contained" onClick={sendMessage} sx={{backgroundColor: '#31572c',}}>
+          <Button
+            variant="contained"
+            onClick={sendMessage}
+            sx={{ backgroundColor: '#31572c', }}
+          >
             Send
           </Button>
         </Paper>

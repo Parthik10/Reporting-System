@@ -9,6 +9,7 @@ const authRoute = require("./router/auth-router");
 const emergencyRoute = require("./router/emergencyRoutes"); 
 const connectDb = require("./utils/db");
 const errorMiddleware = require("./middlewares/error.middleware");
+const chatbotRoutes = require('./router/chatbotRoutes');
 
 // Handle CORS
 const corsOptions = {
@@ -27,6 +28,7 @@ app.use("/api/reportform", reportRoute);
 app.use("/api/data", serviceRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/emergency", emergencyRoute); 
+app.use('/api', chatbotRoutes);
 
 // Serve static files
 app.use("/uploads", express.static("uploads"));
