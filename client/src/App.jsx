@@ -9,7 +9,7 @@ import ContextProvider, { useValue } from './context/ContextProvider';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminReports from './pages/AdminReports';
-import Chatbot from './components/chatbot';
+import Chatbot from './components/Chatbot';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
