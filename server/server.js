@@ -19,14 +19,13 @@ app.get('/', (req, res) => {
 // Handle CORS
 const corsOptions = {
   origin: [
-    process.env.FRONTEND_URL, 
-    "https://clubmanagement1.netlify.app",
-    "http://localhost:5173", 
-    "http://localhost:4173"  
-  ].filter(Boolean), 
+    "https://reporting-portal1.netlify.app", // Your frontend URL
+    "http://localhost:5173"  // Localhost (for development)
+  ],
   methods: "GET, POST, PUT, DELETE, PATCH",
-  credentials: true,  // Allow cookies to be sent with requests
+  credentials: true,
 };
+
 
 // Use CORS with the defined options
 app.use(cors(corsOptions));
