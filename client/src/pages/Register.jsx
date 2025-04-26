@@ -35,7 +35,7 @@ const Register = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: "auto", mt: 5 }}>
+    <Box sx={{ maxWidth: 400, mx: "auto", mt: 5 , border: "1px solid #31572c", padding: "20px", borderRadius: "10px" ,boxShadow: "0px 0px 10px #31572c"}}>
       <Typography variant="h5" mb={3}>Register</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
@@ -65,7 +65,7 @@ const Register = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         {/* Role selection could be added here if needed */}
-        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 , backgroundColor: "#31572c"}}>
           Register
         </Button>
       </form>

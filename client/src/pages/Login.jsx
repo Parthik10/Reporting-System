@@ -37,9 +37,9 @@ const Login = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 400, mx: "auto", mt: 5 }}>
+    <Box sx={{ maxWidth: 400, mx: "auto", mt: 5 , border: "1px solid #31572c", padding: "20px", borderRadius: "10px" ,boxShadow: "0px 0px 10px #31572c"}}>
       <Typography variant="h5" mb={3}>Login</Typography>
-      <form onSubmit={handleSubmit}>
+      <form  onSubmit={handleSubmit} >
         <TextField
           label="Email"
           type="email"
@@ -58,7 +58,7 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2 }}>
+        <Button type="submit" variant="contained" fullWidth sx={{ mt: 2,backgroundColor: "#31572c" }}>
           Login
         </Button>
       </form>

@@ -64,6 +64,7 @@ const ReportingForm = () => {
       }
     }
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -121,6 +122,7 @@ const ReportingForm = () => {
   
 
   return (
+    <Box sx={{ maxWidth: 600,mt:2 ,mx: "auto" , border: "1px solid #31572c", padding: "20px", borderRadius: "10px" ,boxShadow: "0px 0px 10px #31572c"}}>
     <form onSubmit={handleSubmit}>
       <Stack
         sx={{
@@ -143,6 +145,7 @@ const ReportingForm = () => {
         {/* Upload Image */}
         <Box
           sx={{
+            width: "100%", maxWidth: 485,
             display: "flex",
             alignItems: "center",
             mb: 2,
@@ -161,7 +164,7 @@ const ReportingForm = () => {
           <label htmlFor="upload-image">
             <IconButton color="primary" aria-label="upload picture" component="span">
               <PhotoCamera />
-              <Typography sx={{ ml: 1 }}>Choose Image</Typography>
+              <Typography sx={{ ml: 1 }}>Choose Image from gallery</Typography>
             </IconButton>
           </label>
           {image && <Typography sx={{ ml: 2 }}>{image.name}</Typography>}
@@ -179,6 +182,7 @@ const ReportingForm = () => {
         </DialogActions>
       </Stack>
     </form>
+    </Box>
   );
 };
 

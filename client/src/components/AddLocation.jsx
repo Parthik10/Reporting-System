@@ -24,7 +24,7 @@ const AddLocation = () => {
   // Fetch and set initial location using IPAPI if not already set
   useEffect(() => {
     if (!lng && !lat) {
-      fetch('https://ipapi.co/json')
+      fetch('https://ipapi.co/json/')
         .then((response) => response.json())
         .then((data) => {
           mapRef.current?.flyTo({

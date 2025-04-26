@@ -125,7 +125,7 @@ function Header() {
                             to="/admin-reports"
                             sx={{ textAlign: 'center', textDecoration: 'none', color: 'inherit' }}
                           >
-                            Admin Reports
+                            Admin Dashboard
                           </Typography>
                         </MenuItem>
                       ),
@@ -163,7 +163,7 @@ function Header() {
               <>
                 {auth.user.role === 'admin' && (
                   <Button component={Link} to="/admin-reports" sx={{ my: 2, color: 'white' }}>
-                    Admin Reports
+                    Admin dashboard
                   </Button>
                 )}
                 <Button onClick={handleLogout} sx={{ my: 2, color: 'white' }}>
