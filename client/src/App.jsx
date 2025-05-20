@@ -10,6 +10,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminReports from './pages/AdminReports';
 import Chatbot from './components/Chatbot';
+import About from './pages/About';
+import Footer from './components/Footer';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -52,8 +54,10 @@ function App() {
               </AdminRoute>
             }
           />
+          <Route path="/about" element={<About />} />
         </Routes>
         <ToastContainer position="top-right" autoClose={3000} />
+        <Footer />
       </Router>
       <Chatbot />
     </ContextProvider>

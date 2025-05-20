@@ -1,1 +1,33 @@
 @import 'mapbox-gl/dist/mapbox-gl.css';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+body {
+  font-family: 'Montserrat', Arial, sans-serif;
+  background: #f8ffae;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  color: #234e52;
+  transition: background 0.5s;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button, .MuiButton-root {
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+}
+
+@keyframes blinker {
+  50% { opacity: 0.6; }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #e0eafc;
+}
+::-webkit-scrollbar-thumb {
+  background: #43c6ac;
+  border-radius: 4px;
+}

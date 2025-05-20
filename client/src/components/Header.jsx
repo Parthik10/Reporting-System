@@ -18,7 +18,8 @@ import { useValue } from '../context/ContextProvider';
 const pages = [
   { name: 'Home', path: '/' },
   { name: 'report here', path: '/add-report' },
-  { name: 'Reports', path: '/reports' }
+  { name: 'Reports', path: '/reports' },
+  { name: 'About', path: '/about' }
 ];
 
 function Header() {
@@ -150,23 +151,25 @@ function Header() {
                 {page.name}
               </Button>
             ))}
+          </Box>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             {!auth.user ? (
               <>
-                <Button component={Link} to="/login" sx={{ my: 2, color: 'white' }}>
+                <Button component={Link} to="/login" variant="outlined" sx={{ my: 2, mx: 1, color: 'white', borderColor: 'white' }}>
                   Login
                 </Button>
-                <Button component={Link} to="/register" sx={{ my: 2, color: 'white' }}>
+                <Button component={Link} to="/register" variant="outlined" sx={{ my: 2, mx: 1, color: 'white', borderColor: 'white' }}>
                   Register
                 </Button>
               </>
             ) : (
               <>
                 {auth.user.role === 'admin' && (
-                  <Button component={Link} to="/admin-reports" sx={{ my: 2, color: 'white' }}>
+                  <Button component={Link} to="/admin-reports" sx={{ my: 2, mx: 1, color: 'white' }}>
                     Admin dashboard
                   </Button>
                 )}
-                <Button onClick={handleLogout} sx={{ my: 2, color: 'white' }}>
+                <Button onClick={handleLogout} variant="outlined" sx={{ my: 2, mx: 1, color: 'white', borderColor: 'white' }}>
                   Logout
                 </Button>
               </>
